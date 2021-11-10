@@ -57,6 +57,26 @@
             justify-content: center;
         }
 
+        main .foo {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            margin: 5px;
+        }
+
+        .foo .buttons a button,
+        .foo .buttons form button {
+            width: auto;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 3px 5px;
+            cursor: pointer;
+            color: #fff;
+            border: none;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
         .vacancy-container {
             width: 100%;
             background-color: none;
@@ -70,31 +90,58 @@
             color: #069cc2;
         }
 
+        .buttons {
+            display: flex;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="container">
-        <a href="{{ route('home') }}">
+        <a href="{{ route('vacancies') }}">
             <button style="">
-                Home
+                Buscar Vagas
             </button>
         </a>
         <main>
             <div class="head">
-                <h1>Vagas</h1>
+                <h1>{{ $vacancy->title }}</h1>
             </div>
-            @foreach ($vacancies as $vacancy)
-                <div class="vacancy-container">
-                    <h2><a href="/vacancy/{{ $vacancy->id }}">{{ $vacancy->title }}</a></h2>
-                    <p><strong>Habilidades: </strong>
-                        @foreach ($vacancy->skills as $skill)
-                            {{ $skill->name }},
-                        @endforeach
-                    </p>
 
+            <div class="vacancy-container">
+                <h3>Requisitos/Habilidades técnicas:</h3>
+                <ul>
+                    @foreach ($vacancy->skills as $skill)
+                        <li>{{ $skill->name }}</li>
+                    @endforeach
+                </ul>
+
+                <h3>Candidatos adéquos:</h3>
+                <ul>
+                    @foreach ($vacancy->skills as $skill)
+                        <li>{{ $skill->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="foo">
+                <div class="buttons">
+                    <a href="{{ route('vacancy.update', ['id' => $vacancy->id]) }}">
+                        <button style="background: #ce6e01;">
+                            Atualizar
+                        </button>
+                    </a>
+                    <form method="post" action="{{ route('vacancy.delete') }}">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="id" value="{{ $vacancy->id }}">
+                        <button style="background: #B20000;">
+                            Deletar
+                        </button>
+                    </form>
                 </div>
-            @endforeach
+                <span>Publicado em {{ $vacancy->created_at }}</span>
+            </div>
         </main>
         <a href="{{ route('vacancy.create') }}">
             <button style="">

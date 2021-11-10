@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Models\Vacancy;
 
 class VacancySeeder extends Seeder
 {
@@ -16,14 +17,14 @@ class VacancySeeder extends Seeder
     public function run()
     {
         //
-        DB::table('vacancies')->insert([
-            'title' => Str::random(10)
+        Vacancy::create([
+            'title' => 'Desenvolvedor '.Str::random(10)
         ]);
-        DB::table('vacancies')->insert([
-            'title' => Str::random(10)
+        Vacancy::create([
+            'title' => 'Desenvolvedor '.Str::random(10)
         ]);
-        DB::table('vacancies')->insert([
-            'title' => Str::random(10)
+        Vacancy::create([
+            'title' => 'Desenvolvedor '.Str::random(10)
         ]);
     }
 }
