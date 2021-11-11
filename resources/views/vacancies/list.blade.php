@@ -92,6 +92,12 @@
                             {{ $skill->name }},
                         @endforeach
                     </p>
+                    
+                    <p><strong>Candidatos aptos: </strong>
+                        @foreach ($vacancy->candidates as $candidate)
+                            {{ $candidate->name }},
+                        @endforeach
+                    </p>
 
                 </div>
             @endforeach

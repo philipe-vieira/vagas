@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Buscar Vagas</title>
+    <title>Detalhes da Vaga</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -94,6 +94,16 @@
             display: flex;
         }
 
+        li span {
+            font-size: 0.75rem;
+        }
+
+        li a,
+        li a:hover {
+            text-decoration: none;
+            color: #069cc2;
+        }
+
     </style>
 </head>
 
@@ -119,8 +129,18 @@
 
                 <h3>Candidatos adéquos:</h3>
                 <ul>
-                    @foreach ($vacancy->skills as $skill)
-                        <li>{{ $skill->name }}</li>
+                    @foreach ($vacancy->candidates as $candidate)
+                        <li><a href="{{ route('candidate.id', ['id' => $candidate->id]) }}">
+                                {{ $candidate->name }}
+                            </a>
+                            <br>
+                            <span>
+                                <strong>Habilidades do Candidato(a): </strong>
+                                @foreach ($candidate->skills as $skill)
+                                    {{ $skill->name }},
+                                @endforeach
+                            </span>
+                        </li>
                     @endforeach
                 </ul>
             </div>

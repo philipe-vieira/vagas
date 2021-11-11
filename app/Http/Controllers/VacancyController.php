@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Vacancy;
+use App\Models\Candidate;
 use App\Models\Skill;
 
 class VacancyController extends Controller
@@ -12,6 +13,11 @@ class VacancyController extends Controller
 
     public function index() {
         $vacancies = Vacancy::get();
+        
+        $vacancies->map(function ($vacancy) {
+            $vacancy->candidates = $this->candidates_to_vacancy($vacancy);
+            return $vacancy;
+        });
         
         return view('vacancies.list', ['vacancies' => $vacancies]);
     }
@@ -23,6 +29,8 @@ class VacancyController extends Controller
             // Not Find the Vacancy
             return redirect()->route('vacancies', ['error' => 'Vacancy not Found']);
         }
+
+        $vacancy->candidates = $this->candidates_to_vacancy($vacancy);
 
         return view('vacancies.show', ['vacancy' => $vacancy]);
     }
@@ -66,7 +74,6 @@ class VacancyController extends Controller
         ]);
     }
 
-    
     public function change(Request $request) {
         $vacancy = Vacancy::find($request->id);
 
@@ -104,5 +111,29 @@ class VacancyController extends Controller
         Vacancy::destroy($request->id);
         return redirect()
             ->route('vacancies');
+    }
+
+    function candidates_to_vacancy($vacancy){
+        $candidates = Candidate::get();
+        $able_candidates = [];
+        
+        foreach ($candidates as $candidate) {
+            $skills_amount = 0;
+
+            foreach ($vacancy->skills as $vacancy_skill) {
+                foreach ($candidate->skills as $candidate_skill) {
+                    //If skill of candidate match with vacancy skill
+                    if($vacancy_skill->id === $candidate_skill->id)
+                        $skills_amount++;
+                }
+            }
+
+            if ($skills_amount >= 3){
+                // If candidate is able, add in array
+                array_push($able_candidates, $candidate);
+            }
+        }
+        
+        return $able_candidates;
     }
 }
