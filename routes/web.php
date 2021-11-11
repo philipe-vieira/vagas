@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Middleware\EnsureMinimalSkills;
 
@@ -35,3 +36,14 @@ Route::put('/vacancy', [VacancyController::class, 'change'])
     ->middleware(EnsureMinimalSkills::class);
 Route::delete('/vacancy', [VacancyController::class, 'delete'])->name('vacancy.delete');
 
+Route::get('/candidates', [CandidateController::class, 'index'])->name('candidates');
+Route::get('/candidate/register', [CandidateController::class, 'create'])->name('candidate.create');
+Route::get('/candidate/update/{id}', [CandidateController::class, 'update'])->name('candidate.update');
+Route::get('/candidate/{id}', [CandidateController::class, 'show'])->name('candidate.id');
+Route::post('/candidate', [CandidateController::class, 'store'])
+    ->name('candidate.store')
+    ->middleware(EnsureMinimalSkills::class);
+Route::put('/candidate', [CandidateController::class, 'change'])
+    ->name('candidate.change')
+    ->middleware(EnsureMinimalSkills::class);
+Route::delete('/candidate', [CandidateController::class, 'delete'])->name('candidate.delete');
