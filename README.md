@@ -7,6 +7,16 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Running the project
+
+To run this project, you must first configure your database connection in the .env file. Then run the following commands on your command line:
+
+``` bash
+$ php artisan migrate --seed
+$ npm install && npm run dev
+$ php artisan serve
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
