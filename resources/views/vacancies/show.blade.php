@@ -140,7 +140,7 @@
                         </button>
                     </form>
                 </div>
-                <span>Publicado em {{ $vacancy->created_at }}</span>
+                <span>Publicado em {{ date('d/m/Y', strtotime($vacancy->created_at)) }}</span>
             </div>
         </main>
         <a href="{{ route('vacancy.create') }}">

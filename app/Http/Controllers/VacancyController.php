@@ -60,7 +60,6 @@ class VacancyController extends Controller
 
         $skills = Skill::get();
   
-        //dd($request->error);
         return view('vacancies.update', [
             'vacancy' => $vacancy,
             'skills' => $skills

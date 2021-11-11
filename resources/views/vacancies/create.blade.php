@@ -19,7 +19,7 @@
 
         .container {
             width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
             background: #dfdfdf;
             display: flex;
             flex-direction: column;
@@ -102,6 +102,44 @@
             margin: 1px 5px;
         }
 
+        button.close {
+            width: auto;
+            background-color: transparent;
+            border: 0;
+            -webkit-appearance: none;
+        }
+
+        .alert-warning {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+
+        .fade.show {
+            opacity: 1;
+        }
+
+        .alert {
+            position: relative;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 2rem;
+            border: 1 px solid transparent;
+            border-radius: 0.25rem;
+        }
+
+        .fade {
+            opacity: 0;
+            transition: opacity .15s linear;
+        }
+
+        .alert-dismissible .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.75rem 1.25rem;
+            color: inherit;
+        }
+
     </style>
 </head>
 
@@ -110,6 +148,14 @@
 
         <h2>Cadastro de Vaga</h2>
         <div class="box">
+            @if (session('error'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Warning</strong> {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <form action="{{ route('vacancy.store') }}" method="post">
                 @csrf
                 <div class="form-item">
